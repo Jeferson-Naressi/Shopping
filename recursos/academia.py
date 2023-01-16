@@ -65,4 +65,6 @@ class Academia(Resource):
         academias.append(nova_academia)
         return nova_academia,201
     def delete(self,academia_id):
-        pass
+        global academias
+        academias = [academia for academia in academias if academia['academia_id'] != academia_id]
+        return {'massage':'Academia Deletada'}
