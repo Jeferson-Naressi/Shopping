@@ -1,70 +1,64 @@
 from flask_restful import Resource, reqparse
 
-academias = [
+lojasShopping = [
     {
-        'academia_id': 'smart',
+        'shopping_id': 'smart',
         'nome': 'Smart Academia',
         'nota': 8.9,
         'valor': 119.99,
         'cidade': 'São Paulo'},
     {
-        'academia_id': 'nocaute',
+        'shopping_id': 'nocaute',
         'nome': 'Nocaute Academia',
         'nota': 8.5,
         'valor': 99.99,
         'cidade': 'Osasco'},
     {
-        'academia_id': 'cross',
+        'shopping_id': 'cross',
         'nome': 'Cross Life Academia',
         'notas': 9.0,
         'valor': 109.99,
         'cidade': 'Campinas'},
 ]
 
-class Academias(Resource):
+class lojas(Resource):
     def get(self):
-        return {'academia': academias}
+        return {'academia': lojasShopping} #mudas dps no postman tbm
 
-class Academia(Resource):
+class loja(Resource):
     argumentos = reqparse.RequestParser()
     argumentos.add_argument('nome')
-    argumentos.add_argument('estrelas')
+    argumentos.add_argument('nota')
     argumentos.add_argument('diaria')
     argumentos.add_argument('cidade')
 
-    def encontrarAcademia(academia_id):
-        for academia in academias:
-            if academia['academia_id'] == academia_id:
-                return academia
+    def encontrarLojas(shopping_id):
+        for loja in lojasShopping:
+            if loja['shopping_id'] == shopping_id:
+                return loja
         return None
-    def get(self,academia_id):
-        academia = Academia.encontrarAcademia(academia_id)
-        if academia:
-            return academia
-        return {'message':'Academia not found.'}, 404
-    def post(self,academia_id):
-        dados = Academia.argumentos.parse_args()
-        nova_academia = {
-            'academia_id': academia_id,
-            'nome': dados['nome'],
-            'estrelas': dados['nome'],
-            'diaria': dados['diaria'],
-            'cidade': dados['cidade'],
-        }
-        academias.append(nova_academia)
-        return nova_academia,200
+    def get(self,shopping_id):
+        lojas = loja.encontrarLojas(shopping_id)
+        if lojas:
+            return lojas
+        return {'message':'Loja not found.'}, 404
+    def post(self,shopping_id):
+        dados = loja.argumentos.parse_args()
+        nova_Loja = {'shopping_id': shopping_id, **dados}
+        lojasShopping.append(nova_Loja)
+        return nova_Loja,200
 
-    def put(self,academia_id):
-        dados = Academia.argumentos.parse_args()
-        nova_academia = {'academia_id': academia_id, **dados}
-        academia = Academia.encontrarAcademia(academia_id)
+    def put(self,shopping_id):
+        dados = loja.argumentos.parse_args()
+        nova_Loja = {'shopping_id': shopping_id, **dados}
+        lojasShopping = loja.encontrarLojas(shopping_id)
 
-        if academia:
-            academia.update(nova_academia)
-            return nova_academia,200
-        academias.append(nova_academia)
-        return nova_academia,201
-    def delete(self,academia_id):
-        global academias
-        academias = [academia for academia in academias if academia['academia_id'] != academia_id]
-        return {'massage':'Academia Deletada'}
+        if lojasShopping:
+            lojasShopping.update(nova_Loja)
+            return nova_Loja,200
+        lojasShopping.append(nova_Loja)
+        return nova_Loja,201
+    def delete(self,shopping_id):
+        global lojasShopping
+        lojasShopping = [lojas for lojas in lojasShopping if lojas['shopping_id'] != shopping_id]
+        return {'massage':'Loja Deletada'}
