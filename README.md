@@ -1,4 +1,4 @@
-# Rede_de_Shopping
+Shopping
 
 # 💻Sobre o projeto
 Uma API para lojas de um Shopping {Linguagem ultilizada: REST APIs com Python, Flask e Postman uma plataforma de API }.
