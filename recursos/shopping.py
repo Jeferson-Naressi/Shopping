@@ -23,7 +23,7 @@ lojasShopping = [
 
 class lojas(Resource):
     def get(self):
-        return {'academia': lojasShopping} #mudas dps no postman tbm
+        return {'loja': lojasShopping} #mudas dps no postman tbm
 
 class loja(Resource):
     argumentos = reqparse.RequestParser()
